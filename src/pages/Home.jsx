@@ -130,7 +130,7 @@ function Home() {
         {error}
       </div>
     );
-  } x
+  } 
 
   return (
     <div

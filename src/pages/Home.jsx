@@ -191,7 +191,7 @@ function Home() {
             <Sparkles size={16} />
 
             <span className="text-sm text-slate-300">
-              Dashboard inteligente
+              Andresgida Project
             </span>
           </div>
 

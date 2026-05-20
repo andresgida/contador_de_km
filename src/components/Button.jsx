@@ -1,21 +1,18 @@
 function Button({
   children,
-  onClick,
-  disabled,
+  ...props
 }) {
   return (
     <button
-      disabled={disabled}
-      onClick={onClick}
+      {...props}
       className="
         w-full
         rounded-2xl
         bg-gradient-to-r
         from-indigo-500
-        to-purple-600
+        to-cyan-500
         px-6
         py-4
-        text-lg
         font-semibold
         text-white
         shadow-lg
@@ -24,7 +21,6 @@ function Button({
         duration-300
         hover:scale-[1.02]
         hover:shadow-indigo-500/40
-        active:scale-[0.98]
         disabled:cursor-not-allowed
         disabled:opacity-50
       "

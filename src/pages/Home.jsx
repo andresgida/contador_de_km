@@ -5,6 +5,7 @@ import {
   Calendar,
   Gauge,
   Activity,
+  Sparkles,
 } from "lucide-react";
 
 import Button from "../components/Button";
@@ -22,11 +23,8 @@ import {
 import { calculateMileageAverage } from "../utils/calculations";
 
 function Home() {
-  const {
-    data,
-    loading,
-    error,
-  } = useInitialData();
+  const { data, loading, error } =
+    useInitialData();
 
   const [initialMileage, setInitialMileage] =
     useState("");
@@ -71,9 +69,8 @@ function Home() {
 
     setFormErrors(errors);
 
-    if (Object.keys(errors).length > 0) {
+    if (Object.keys(errors).length > 0)
       return;
-    }
 
     try {
       setSaving(true);
@@ -116,7 +113,7 @@ function Home() {
       console.error(err);
 
       alert(
-        "Ocurrió un error guardando los datos"
+        "Ocurrió un error guardando datos"
       );
     } finally {
       setSaving(false);
@@ -129,67 +126,110 @@ function Home() {
 
   if (error) {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-slate-950 text-red-400">
+      <div className="flex min-h-screen items-center justify-center bg-[#030712] text-red-400">
         {error}
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-slate-950 text-white">
-      <div className="mx-auto max-w-6xl px-4 py-10">
-        {/* HEADER */}
+    <div
+      className="
+        relative
+        min-h-screen
+        overflow-hidden
+        bg-[#030712]
+        text-white
+      "
+    >
+      {/* BACKGROUND */}
 
-        <div className="mb-10 text-center">
+      <div
+        className="
+          absolute
+          left-[-200px]
+          top-[-200px]
+          h-[400px]
+          w-[400px]
+          rounded-full
+          bg-indigo-500/20
+          blur-3xl
+        "
+      />
+
+      <div
+        className="
+          absolute
+          bottom-[-200px]
+          right-[-200px]
+          h-[400px]
+          w-[400px]
+          rounded-full
+          bg-cyan-500/20
+          blur-3xl
+        "
+      />
+
+      <div className="relative z-10 mx-auto max-w-7xl px-5 py-10">
+        {/* HERO */}
+
+        <div className="text-center">
           <div
             className="
               inline-flex
               items-center
+              gap-2
               rounded-full
               border
-              border-indigo-500/20
-              bg-indigo-500/10
+              border-indigo-400/20
+              bg-white/5
               px-4
               py-2
-              text-sm
-              text-indigo-300
+              backdrop-blur-xl
             "
           >
-            Calculadora inteligente
+            <Sparkles size={16} />
+
+            <span className="text-sm text-slate-300">
+              Dashboard inteligente
+            </span>
           </div>
 
           <h1
             className="
+              mx-auto
               mt-6
+              max-w-4xl
               text-4xl
-              font-bold
+              font-black
               leading-tight
-              md:text-5xl
+              tracking-tight
+              md:text-6xl
             "
           >
-            Promedio anual de kilometraje
+            Promedio actual de KM del palomo
           </h1>
 
           <p
             className="
               mx-auto
-              mt-4
+              mt-6
               max-w-2xl
-              text-base
+              text-lg
+              leading-relaxed
               text-slate-400
-              md:text-lg
             "
           >
-            Calcula el promedio anual
-            recorrido por tu vehículo
-            utilizando datos reales y
-            estimaciones automáticas.
+            Analiza el rendimiento y uso
+            de tu automóvil con métricas
+            modernas y estimaciones
+            automáticas.
           </p>
         </div>
 
-        {/* CONTENT */}
+        {/* GRID */}
 
-        <div className="grid gap-8 lg:grid-cols-3">
+        <div className="mt-14 grid gap-8 lg:grid-cols-[420px_1fr]">
           {/* FORM */}
 
           <div
@@ -197,21 +237,22 @@ function Home() {
               rounded-3xl
               border
               border-white/10
-              bg-slate-900
-              p-6
+              bg-white/5
+              p-8
               shadow-2xl
+              backdrop-blur-2xl
             "
           >
-            <h2 className="text-2xl font-semibold">
+            <h2 className="text-2xl font-bold">
               Datos del vehículo
             </h2>
 
-            <p className="mt-2 text-sm text-slate-400">
+            <p className="mt-2 text-slate-400">
               Completa la información para
-              realizar el cálculo.
+              generar el análisis.
             </p>
 
-            <div className="mt-8 space-y-5">
+            <div className="mt-8 space-y-6">
               <FormField
                 label="Kilometraje inicial"
                 type="number"
@@ -249,27 +290,25 @@ function Home() {
                 }
               />
 
-              <div className="pt-3">
-                <Button
-                  onClick={handleCalculate}
-                  disabled={saving}
-                >
-                  {saving
-                    ? "Calculando..."
-                    : "Calcular promedio"}
-                </Button>
-              </div>
+              <Button
+                onClick={handleCalculate}
+                disabled={saving}
+              >
+                {saving
+                  ? "Calculando..."
+                  : "Calcular promedio"}
+              </Button>
             </div>
           </div>
 
           {/* RESULTS */}
 
-          <div className="lg:col-span-2">
-            <div className="grid gap-5 sm:grid-cols-2">
+          <div>
+            <div className="grid gap-6 md:grid-cols-2">
               <ResultCard
                 title="Kilómetros recorridos"
                 value={`${results?.kmsTraveled || 0} km`}
-                icon={<Car size={20} />}
+                icon={<Car size={22} />}
               />
 
               <ResultCard
@@ -277,7 +316,7 @@ function Home() {
                 value={
                   results?.daysElapsed || 0
                 }
-                icon={<Calendar size={20} />}
+                icon={<Calendar size={22} />}
               />
 
               <ResultCard
@@ -289,7 +328,7 @@ function Home() {
                       )
                     : "0"
                 } km`}
-                icon={<Gauge size={20} />}
+                icon={<Gauge size={22} />}
               />
 
               <ResultCard
@@ -301,7 +340,7 @@ function Home() {
                       )
                     : "0"
                 } km`}
-                icon={<Activity size={20} />}
+                icon={<Activity size={22} />}
               />
             </div>
 
@@ -309,74 +348,50 @@ function Home() {
 
             <div
               className="
-                mt-6
+                mt-8
                 rounded-3xl
                 border
                 border-white/10
-                bg-gradient-to-br
-                from-indigo-500/10
-                to-slate-900
+                bg-white/5
                 p-8
+                backdrop-blur-2xl
               "
             >
-              <h3 className="text-2xl font-semibold">
-                ¿Cómo funciona?
+              <h3 className="text-2xl font-bold">
+                Análisis inteligente
               </h3>
 
               <p
                 className="
                   mt-4
                   max-w-3xl
-                  text-slate-300
+                  text-slate-400
                   leading-relaxed
                 "
               >
-                La aplicación calcula el
-                promedio anual de kilómetros
-                recorridos utilizando la
-                diferencia entre el
-                kilometraje inicial y el
-                actual, teniendo en cuenta
-                los días transcurridos desde
-                la fecha registrada.
+                El sistema analiza el
+                kilometraje recorrido desde
+                la fecha inicial registrada
+                y calcula una proyección
+                anual basada en el promedio
+                diario de uso del vehículo.
               </p>
 
-              <div
-                className="
-                  mt-6
-                  grid
-                  gap-4
-                  md:grid-cols-3
-                "
-              >
+              <div className="mt-8 grid gap-5 md:grid-cols-3">
                 <div
                   className="
                     rounded-2xl
-                    bg-white/5
-                    p-4
+                    border
+                    border-white/10
+                    bg-black/20
+                    p-5
                   "
                 >
-                  <p className="text-sm text-slate-400">
-                    Cálculo automático
-                  </p>
-
-                  <h4 className="mt-2 font-semibold">
-                    Tiempo real
-                  </h4>
-                </div>
-
-                <div
-                  className="
-                    rounded-2xl
-                    bg-white/5
-                    p-4
-                  "
-                >
-                  <p className="text-sm text-slate-400">
+                  <p className="text-sm text-slate-500">
                     Persistencia
                   </p>
 
-                  <h4 className="mt-2 font-semibold">
+                  <h4 className="mt-2 text-lg font-semibold">
                     Supabase Cloud
                   </h4>
                 </div>
@@ -384,16 +399,36 @@ function Home() {
                 <div
                   className="
                     rounded-2xl
-                    bg-white/5
-                    p-4
+                    border
+                    border-white/10
+                    bg-black/20
+                    p-5
                   "
                 >
-                  <p className="text-sm text-slate-400">
-                    Responsive
+                  <p className="text-sm text-slate-500">
+                    Arquitectura
                   </p>
 
-                  <h4 className="mt-2 font-semibold">
-                    Mobile First
+                  <h4 className="mt-2 text-lg font-semibold">
+                    React + Vite
+                  </h4>
+                </div>
+
+                <div
+                  className="
+                    rounded-2xl
+                    border
+                    border-white/10
+                    bg-black/20
+                    p-5
+                  "
+                >
+                  <p className="text-sm text-slate-500">
+                    Diseño
+                  </p>
+
+                  <h4 className="mt-2 text-lg font-semibold">
+                    Responsive UI
                   </h4>
                 </div>
               </div>

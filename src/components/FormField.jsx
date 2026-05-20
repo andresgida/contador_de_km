@@ -1,15 +1,14 @@
 function FormField({
   label,
-  type = "text",
-  value,
-  onChange,
-  placeholder,
   error,
+  ...props
 }) {
   return (
-    <div className="space-y-2">
+    <div>
       <label
         className="
+          mb-2
+          block
           text-sm
           font-medium
           text-slate-300
@@ -19,37 +18,27 @@ function FormField({
       </label>
 
       <input
-        type={type}
-        value={value}
-        onChange={onChange}
-        placeholder={placeholder}
-        className={`
+        {...props}
+        className="
           w-full
           rounded-2xl
           border
           border-white/10
-          bg-white/5
+          bg-black/20
           px-4
           py-4
           text-white
-          placeholder:text-slate-400
-          backdrop-blur-sm
+          outline-none
           transition-all
-          duration-300
+          placeholder:text-slate-500
           focus:border-indigo-400
-          focus:outline-none
-          focus:ring-2
-          focus:ring-indigo-500/40
-          ${
-            error
-              ? "border-red-500"
-              : ""
-          }
-        `}
+          focus:ring-4
+          focus:ring-indigo-500/20
+        "
       />
 
       {error && (
-        <p className="text-sm text-red-400">
+        <p className="mt-2 text-sm text-red-400">
           {error}
         </p>
       )}

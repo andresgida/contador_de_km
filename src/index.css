@@ -55,6 +55,18 @@ html, body {
   min-height: 100svh;
 }
 
+input[type="date"].date-input::-webkit-calendar-picker-indicator {
+  opacity: 0;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+}
+
+input[type="date"] {
+  color-scheme: dark;
+}
+
 @layer utilities {
   .glass-panel {
     background: rgba(15, 23, 42, 0.7);

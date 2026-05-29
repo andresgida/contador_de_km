@@ -1,6 +1,13 @@
-import { supabase } from "./supabase";
+import { supabase, supabaseConfigError } from "./supabase";
+
+function assertSupabase() {
+  if (!supabase) {
+    throw new Error(supabaseConfigError);
+  }
+}
 
 export async function getInitialData() {
+  assertSupabase();
   const { data, error } = await supabase
     .from("initial_data")
     .select("*")
@@ -14,10 +21,8 @@ export async function getInitialData() {
   return data;
 }
 
-export async function updateInitialData(
-  mileage,
-  initialDate
-) {
+export async function updateInitialData(mileage, initialDate) {
+  assertSupabase();
   const { error } = await supabase
     .from("initial_data")
     .update({
@@ -31,9 +36,8 @@ export async function updateInitialData(
   }
 }
 
-export async function saveCalculation(
-  calculation
-) {
+export async function saveCalculation(calculation) {
+  assertSupabase();
   const { error } = await supabase
     .from("calculations")
     .insert([calculation]);

@@ -77,7 +77,7 @@ function Home() {
 
   if (error) {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-background text-error">
+      <div className="flex min-h-screen items-center justify-center bg-background px-6 text-error text-sm">
         {error}
       </div>
     );

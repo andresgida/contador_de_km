@@ -1,4 +1,4 @@
-function LoadingSpinner() {
+function LoadingSpinner({ message = "Cargando datos..." }) {
   return (
     <div className="flex min-h-screen items-center justify-center bg-background">
       <div className="flex flex-col items-center gap-4">
@@ -7,7 +7,7 @@ function LoadingSpinner() {
           className="text-[11px] text-slate-text tracking-widest uppercase"
           style={{ fontFamily: "'JetBrains Mono', monospace" }}
         >
-          Cargando datos...
+          {message}
         </p>
       </div>
     </div>
